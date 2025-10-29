@@ -19,13 +19,8 @@ export default defineConfig({
             clientPort: 443,
             protocol: 'wss'
         },
-        // 👇 Add this section to allow Replit or any external host
-        allowedHosts: [
-            "localhost",
-            "127.0.0.1",
-            "3c1045a0-6390-414d-8ef4-8e4145eb03b3-00-akpdcsak50b2.sisko.replit.dev"
-        ]
-        // if you want to allow all hosts, replace above array with ['*']
+        // ✅ Allow all hosts (fix for Replit dynamic domains)
+        allowedHosts: ['*']
     },
     define: {
         "FRONTEND_VERSION": JSON.stringify(process.env.npm_package_version),
