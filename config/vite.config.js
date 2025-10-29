@@ -15,21 +15,28 @@ export default defineConfig({
         port: 5000,
         host: "0.0.0.0",
         strictPort: true,
+
+        // ✅ Fix for Replit dynamic subdomains
+        allowedHosts: true,   // disables strict hostname validation
+        cors: true,           // allows all origins
+        middlewareMode: false, // ensures full server mode
+
+        // ✅ Fix HMR (live reload) for HTTPS Replit environments
         hmr: {
             clientPort: 443,
-            protocol: 'wss'
+            protocol: "wss",
         },
-        // ✅ Allow all hosts (fix for Replit dynamic domains)
-        allowedHosts: ['*']
     },
+
     define: {
-        "FRONTEND_VERSION": JSON.stringify(process.env.npm_package_version),
+        FRONTEND_VERSION: JSON.stringify(process.env.npm_package_version),
         "process.env": {},
     },
+
     plugins: [
         vue(),
         visualizer({
-            filename: "tmp/dist-stats.html"
+            filename: "tmp/dist-stats.html",
         }),
         viteCompression({
             algorithm: "gzip",
@@ -41,6 +48,7 @@ export default defineConfig({
         }),
         VueDevTools(),
     ],
+
     css: {
         postcss: {
             parser: postCssScss,
@@ -48,6 +56,7 @@ export default defineConfig({
             plugins: [postcssRTLCSS],
         },
     },
+
     build: {
         commonjsOptions: {
             include: [/.js$/],
