@@ -108,13 +108,19 @@ const { apiAuth } = require("./auth");
 const { login } = require("./auth");
 const passwordHash = require("./password-hash");
 
+// ...existing code...
 const hostname = config.hostname;
 
 if (hostname) {
     log.info("server", "Custom hostname: " + hostname);
 }
 
-const port = config.port;
+// replace this line:
+// const port = config.port;
+
+// with this:
+const port = process.env.PORT || config.port || 3000;
+// ...existing code...
 
 const disableFrameSameOrigin = !!process.env.UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN || args["disable-frame-sameorigin"] || false;
 const cloudflaredToken = args["cloudflared-token"] || process.env.UPTIME_KUMA_CLOUDFLARED_TOKEN || undefined;
