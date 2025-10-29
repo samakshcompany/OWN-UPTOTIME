@@ -12,7 +12,20 @@ const viteCompressionFilter = /\.(js|mjs|json|css|html|svg)$/i;
 // https://vitejs.dev/config/
 export default defineConfig({
     server: {
-        port: 3000,
+        port: 5000,
+        host: "0.0.0.0",
+        strictPort: true,
+        hmr: {
+            clientPort: 443,
+            protocol: 'wss'
+        },
+        // 👇 Add this section to allow Replit or any external host
+        allowedHosts: [
+            "localhost",
+            "127.0.0.1",
+            "3c1045a0-6390-414d-8ef4-8e4145eb03b3-00-akpdcsak50b2.sisko.replit.dev"
+        ]
+        // if you want to allow all hosts, replace above array with ['*']
     },
     define: {
         "FRONTEND_VERSION": JSON.stringify(process.env.npm_package_version),
@@ -35,21 +48,21 @@ export default defineConfig({
     ],
     css: {
         postcss: {
-            "parser": postCssScss,
-            "map": false,
-            "plugins": [ postcssRTLCSS ]
-        }
+            parser: postCssScss,
+            map: false,
+            plugins: [postcssRTLCSS],
+        },
     },
     build: {
         commonjsOptions: {
-            include: [ /.js$/ ],
+            include: [/.js$/],
         },
         rollupOptions: {
             output: {
                 manualChunks(id, { getModuleInfo, getModuleIds }) {
-
-                }
-            }
+                    // leave empty — default chunking
+                },
+            },
         },
-    }
+    },
 });
